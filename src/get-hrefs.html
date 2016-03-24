@@ -1,0 +1,35 @@
+<script type="text/javascript">
+  RED.nodes.registerType('get-hrefs',{
+    category: 'function',
+    color: '#28AFB0',
+    defaults: {
+      name: {
+				value: ''
+			}
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'link-variant.png',
+    label: function() {
+      return this.name || 'get-hrefs';
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="get-hrefs">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="get-hrefs">
+  <p>
+		A node that extracts all <code>&lt;a href=""&gt;</code> targets from <code>body</code>
+		in the payload and attaches them as an array <code>hrefs</code> on the output payload.
+	</p>
+	<p>
+		If the input payload contains a <code>url</code> property it will be used as
+		the <code>baseUrl</code> option for <a href="https://www.npmjs.com/package/get-hrefs"><code>get-hrefs</code></a> under the hood.
+	</p>
+</script>
