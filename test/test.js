@@ -95,3 +95,28 @@ test('uses url from input as baseUrl', async t => {
 	t.is(newMsg.hrefs.length, 1);
 	t.is(newMsg.hrefs[0], 'http://example.com/path');
 });
+
+test('oneHrefPerMsg', async t => {
+	const RED = red({oneHrefPerMsg: true});
+	getHrefsNode(RED);
+	const msg = {
+		url: 'http://example.com',
+		payload: `
+			<html>
+				Lorem ipsum
+				<a href="/path">Click me</a>
+				<a href="/path2">Click me</a>
+			</html>
+		`
+	};
+	const receiver = RED._receive();
+	RED._emit('input', msg);
+	const messages = await receiver;
+	t.ok(messages);
+	t.ok(Array.isArray(messages));
+	t.is(messages.length, 1);
+	t.ok(Array.isArray(messages[0]));
+	t.is(messages[0].length, 2);
+	t.is(messages[0][0].href, 'http://example.com/path');
+	t.is(messages[0][1].href, 'http://example.com/path2');
+});
