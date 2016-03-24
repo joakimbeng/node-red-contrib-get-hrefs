@@ -4,8 +4,7 @@
 
 > A Node-RED node to get all href urls from an HTML string
 
-A node that extracts all `<a href="">` targets from `body`
-in the payload and attaches them as an array `hrefs` on the output payload.
+A node that extracts all `<a href="">` targets from `payload` in the input message and attaches them as an array `hrefs` on the output message.
 
 ## Installation
 
@@ -19,12 +18,12 @@ npm install --save node-red-contrib-get-hrefs
 
 To use the node, launch Node-RED (see [running Node-RED](http://nodered.org/docs/getting-started/running.html) for help getting started).
 
-The input payload to the node should at least contain a `body` property containing the HTML to get hrefs from.
+The input payload should be the HTML to get hrefs from.
 
-If the input payload contains a `url` property it will be used as
+If the input message contains a `url` property it will be used as
 the `baseUrl` option for [`get-hrefs`](https://www.npmjs.com/package/get-hrefs) under the hood.
 
-The output payload will be the same as the input but with an `hrefs` array containing all found href urls in the HTML body.
+The output message will be the same as the input but with an `hrefs` array containing all found href urls in the HTML body.
 
 ## Icon credit
 

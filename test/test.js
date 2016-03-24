@@ -45,59 +45,53 @@ test('sends msg on input', async t => {
 	const RED = red();
 	getHrefsNode(RED);
 	const msg = {
-		payload: {
-			body: '<html>Lorem ipsum</html>'
-		}
+		payload: '<html>Lorem ipsum</html>'
 	};
 	const receiver = RED._receive();
 	RED._emit('input', msg);
 	const newMsg = await receiver;
 	t.ok(newMsg);
 	t.ok(newMsg.payload);
-	t.is(newMsg.payload.body, msg.payload.body);
+	t.is(newMsg.payload, msg.payload);
 });
 
 test('includes found hrefs in payload', async t => {
 	const RED = red();
 	getHrefsNode(RED);
 	const msg = {
-		payload: {
-			body: `
-				<html>
-					Lorem ipsum
-					<a href="http://example.com">Click me</a>
-				</html>
-			`
-		}
+		payload: `
+			<html>
+				Lorem ipsum
+				<a href="http://example.com">Click me</a>
+			</html>
+		`
 	};
 	const receiver = RED._receive();
 	RED._emit('input', msg);
 	const newMsg = await receiver;
 	t.ok(newMsg);
-	t.ok(Array.isArray(newMsg.payload.hrefs));
-	t.is(newMsg.payload.hrefs.length, 1);
-	t.is(newMsg.payload.hrefs[0], 'http://example.com');
+	t.ok(Array.isArray(newMsg.hrefs));
+	t.is(newMsg.hrefs.length, 1);
+	t.is(newMsg.hrefs[0], 'http://example.com');
 });
 
-test('uses url from payload as baseUrl', async t => {
+test('uses url from input as baseUrl', async t => {
 	const RED = red();
 	getHrefsNode(RED);
 	const msg = {
-		payload: {
-			url: 'http://example.com',
-			body: `
-				<html>
-					Lorem ipsum
-					<a href="/path">Click me</a>
-				</html>
-			`
-		}
+		url: 'http://example.com',
+		payload: `
+			<html>
+				Lorem ipsum
+				<a href="/path">Click me</a>
+			</html>
+		`
 	};
 	const receiver = RED._receive();
 	RED._emit('input', msg);
 	const newMsg = await receiver;
 	t.ok(newMsg);
-	t.ok(Array.isArray(newMsg.payload.hrefs));
-	t.is(newMsg.payload.hrefs.length, 1);
-	t.is(newMsg.payload.hrefs[0], 'http://example.com/path');
+	t.ok(Array.isArray(newMsg.hrefs));
+	t.is(newMsg.hrefs.length, 1);
+	t.is(newMsg.hrefs[0], 'http://example.com/path');
 });

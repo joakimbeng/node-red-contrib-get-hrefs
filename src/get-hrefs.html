@@ -25,11 +25,11 @@
 
 <script type="text/x-red" data-help-name="get-hrefs">
   <p>
-		A node that extracts all <code>&lt;a href=""&gt;</code> targets from <code>body</code>
-		in the payload and attaches them as an array <code>hrefs</code> on the output payload.
+		A node that extracts all <code>&lt;a href=""&gt;</code> targets from <code>payload</code>
+		in the input message and attaches them as an array <code>hrefs</code> on the output message.
 	</p>
 	<p>
-		If the input payload contains a <code>url</code> property it will be used as
+		If the input message contains a <code>url</code> property it will be used as
 		the <code>baseUrl</code> option for <a href="https://www.npmjs.com/package/get-hrefs"><code>get-hrefs</code></a> under the hood.
 	</p>
 </script>
